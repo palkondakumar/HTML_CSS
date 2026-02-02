@@ -1,0 +1,36 @@
+#box1{
+    height: 100px;
+    width: 100px;
+    border: 2px solid black; 
+    text-align: center;
+    display: inline-block;
+    background-color: brown;
+    margin:25px;
+    
+
+}
+#box2{
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+    text-align: center;
+    display: inline-block;
+    background-color: brown;
+    margin:25px;
+
+}
+
+
+#box3{
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+    text-align: center;
+    display: inline-block;
+    background-color: brown;
+    margin:25px;
+
+}
+button{
+    color: blue;
+}
