@@ -1,0 +1,35 @@
+div{
+    height: 100px;
+    width: 100px;
+    border-style: solid;
+    display: inline-block;
+    background-color: brown;
+    margin: 20px;
+}
+#box1{
+    position: static;
+    right: 20px;
+    left: 20px;
+    top: 20px;
+    bottom: 20px;
+}
+#box2{
+    background-color: rgb(255, 0, 0);
+    background-image: url(cat_photo.jpg);
+    background-size: cover;
+
+}
+#box3{
+    background-color: blue;
+     background-image: url(img_photo.jpg);
+    background-size: cover;
+
+}
+#box4{
+    background-color: rgb(0, 255, 153);
+}
+#box5{
+    background-color: blue;
+     background-image: url(nature_img.jpg);
+    background-size: cover;
+}
