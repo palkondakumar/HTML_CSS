@@ -38,7 +38,7 @@
 
 
 let allUsers = [];
-let editIndex=-1
+let editIndex = 1
 function addUser() {
     let user = {
         studentname: document.getElementById("studentname").value,
@@ -46,13 +46,13 @@ function addUser() {
 
 
     };
-       if(user.studentname === "") return;
-       if(editIndex === -1){
+    if (user.studentname === "") return;
+    if (editIndex === 1) {
         allUsers.push(user)
-        }
-     else{
-        allUsers[editIndex]=user;
-        editIndex=-1;
+    }
+    else {
+        allUsers[editIndex] = user;
+        editIndex = 1;
     }
     displayUsers();
     clearForm();
@@ -77,7 +77,7 @@ function displayUsers() {
 
 function editUser(index) {
     document.getElementById("studentname").value = allUsers[index].studentname;
-     document.getElementById("roll").value = allUsers[index].roll;
+    document.getElementById("roll").value = allUsers[index].roll;
     editIndex = index;
 }
 
