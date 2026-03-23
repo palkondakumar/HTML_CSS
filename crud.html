@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      table {
+        width: 100%;
+      }
+      #updateUserBtn {
+        display: none;
+      }
+      .on_error {
+        background: red;
+        color: white;
+      }
+      .on_success {
+        background: green;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="">First Name</label>
+      <input type="text" name="" id="fname" onkeyup="validateForm()" /> <br />
+      <label for="">Last Name</label>
+      <input type="text" name="" id="lname" onkeyup="validateForm()" /> <br />
+      <label for="">Email </label>
+      <input type="text" name="" id="email" onkeyup="validateForm()" /> <br />
+      <br />
+      <button type="button" onclick="addUser()" id="addUserBtn" disabled>
+        Add User
+      </button>
+      <button type="button" onclick="updateUser()" id="updateUserBtn">
+        Update User
+      </button>
+    </form>
+
+    <hr />
+    <table border="1">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <script>
+      let allUsers = JSON.parse(localStorage.getItem("allUsers"));
+
+      if (allUsers == null) {
+        allUsers = [];
+      }
+      function addUser() {
+        let user = {
+          fname: document.getElementById("fname").value,
+          lname: document.getElementById("lname").value,
+          email: document.getElementById("email").value,
+        };
+
+        allUsers.push(user);
+        console.log("addUser Called !!!", allUsers);
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+        displayUsers();
+        clearForm();
+      }
+
+      function clearForm() {
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("email").value = "";
+      }
+
+      function displayUsers() {
+        document.querySelector("tbody").innerHTML = "";
+        allUsers.forEach(function (user, index) {
+          let myTr = document.createElement("tr");
+          myTr.innerHTML = `  <td>${user.fname}</td>
+                                <td>${user.lname}</td>
+                                <td>${user.email}</td>
+                                <td><button onclick="handleEdit(${index})">Edit User</button></td>
+                                <td><button onclick='handleDelete(${index})'>Delete User</button></td>
+                                `;
+          document.querySelector("tbody").append(myTr);
+        });
+      }
+      displayUsers();
+
+      function handleDelete(index) {
+        console.log(index);
+        allUsers.splice(index, 1);
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+        displayUsers();
+      }
+      var i;
+      function handleEdit(index) {
+        i = index;
+        console.log(allUsers[index]);
+
+        document.getElementById("addUserBtn").style.display = "none";
+        document.getElementById("updateUserBtn").style.display = "block";
+
+        document.getElementById("fname").value = allUsers[index].fname;
+        document.getElementById("lname").value = allUsers[index].lname;
+        document.getElementById("email").value = allUsers[index].email;
+      }
+
+      function updateUser() {
+        let updatedUser = {
+          fname: document.getElementById("fname").value,
+          lname: document.getElementById("lname").value,
+          email: document.getElementById("email").value,
+        };
+        console.log(updatedUser);
+        allUsers[i] = updatedUser;
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+        displayUsers();
+        clearForm();
+
+        document.getElementById("addUserBtn").style.display = "block";
+        document.getElementById("updateUserBtn").style.display = "none";
+      }
+
+      function validateForm() {
+        document.getElementById("fname").setAttribute("class", "on_error");
+        document.getElementById("lname").setAttribute("class", "on_error");
+        document.getElementById("email").setAttribute("class", "on_error");
+
+        console.log("validateForm triggered !!!");
+        const fname = document.getElementById("fname").value;
+        const lname = document.getElementById("lname").value;
+        const email = document.getElementById("email").value;
+        if (fname.length >= 6) {
+          document.getElementById("fname").removeAttribute("class", "on_error");
+          document.getElementById("fname").setAttribute("class", "on_success");
+        }
+        if (lname.length >= 6) {
+          document.getElementById("lname").removeAttribute("class", "on_error");
+          document.getElementById("lname").setAttribute("class", "on_success");
+        }
+        if (email.length >= 6) {
+          document.getElementById("email").removeAttribute("class", "on_error");
+          document.getElementById("email").setAttribute("class", "on_success");
+        }
+
+        if (fname.length >= 6 && lname.length >= 6 && email.length >= 6) {
+          document.getElementById("addUserBtn").disabled = false;
+        } else {
+          document.getElementById("addUserBtn").disabled = true;
+        }
+      }
+    </script>
+  </body>
+</html>
