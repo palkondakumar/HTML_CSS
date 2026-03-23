@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Manager</title>
+    <link rel="stylesheet" href="st.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Student Manager</h2>
+        <form>
+            <label for="studentname">Student Name</label>
+            <input type="text" id="studentname" placeholder="Student Name">
+            <label for="roll-number">Roll Number</label>
+            <input type="text" id="roll" placeholder="Roll Number">
+            <button type="button" onclick="addUser()">Add Student</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Roll No</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Student rows here -->
+                <tr>
+                    <td>John Doe</td>
+                    <td>101</td>
+                    <td><button>Edit</button></td>
+                    <td><button>Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="st.js"></script>
+</body>
+
+</html>

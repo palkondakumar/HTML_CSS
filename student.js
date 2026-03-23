@@ -81,6 +81,7 @@ function editUser(index) {
     editIndex = index;
 }
 
+
 // function deleteUser(index) {
 //     allUsers.splice(index, 1);
 //     displayUsers();
