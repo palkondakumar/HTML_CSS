@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User CRUD</title>
+
+    <style>
+      table {
+        width: 100%;
+        margin-top: 20px;
+      }
+
+      #updateUserBtn {
+        display: none;
+      }
+
+      .on_error {
+        background: red;
+        color: white;
+      }
+
+      .on_success {
+        background: green;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form>
+      <label>First Name</label>
+      <input type="text" id="fname" onkeyup="validateForm()" />
+      <br />
+
+      <label>Last Name</label>
+      <input type="text" id="lname" onkeyup="validateForm()" />
+      <br />
+
+      <label>Email</label>
+      <input type="text" id="email" onkeyup="validateForm()" />
+      <br /><br />
+
+      <button type="button" onclick="addUser()" id="addUserBtn" disabled>
+        Add User
+      </button>
+
+      <button type="button" onclick="updateUser()" id="updateUserBtn">
+        Update User
+      </button>
+    </form>
+
+    <hr />
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      let allUsers = JSON.parse(localStorage.getItem("allUsers"));
+
+      if (allUsers == null) {
+        allUsers = [];
+      }
+
+      let i; // for edit index
+
+      function addUser() {
+        let user = {
+          fname: document.getElementById("fname").value,
+          lname: document.getElementById("lname").value,
+          email: document.getElementById("email").value,
+        };
+
+        allUsers.push(user);
+
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+
+        displayUsers();
+        clearForm();
+
+        document.getElementById("addUserBtn").disabled = true;
+      }
+
+      function clearForm() {
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("email").value = "";
+      }
+
+      function displayUsers() {
+        document.querySelector("tbody").innerHTML = "";
+
+        allUsers.forEach(function (user, index) {
+          let row = document.createElement("tr");
+
+          row.innerHTML = `
+            <td>${user.fname}</td>
+            <td>${user.lname}</td>
+            <td>${user.email}</td>
+            <td><button onclick="handleEdit(${index})">Edit</button></td>
+            <td><button onclick="handleDelete(${index})">Delete</button></td>
+          `;
+
+          document.querySelector("tbody").append(row);
+        });
+      }
+
+      displayUsers();
+
+      function handleDelete(index) {
+        allUsers.splice(index, 1);
+
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+
+        displayUsers();
+      }
+
+      function handleEdit(index) {
+        i = index;
+
+        document.getElementById("addUserBtn").style.display = "none";
+        document.getElementById("updateUserBtn").style.display = "block";
+
+        document.getElementById("fname").value = allUsers[index].fname;
+        document.getElementById("lname").value = allUsers[index].lname;
+        document.getElementById("email").value = allUsers[index].email;
+      }
+
+      function updateUser() {
+        let updatedUser = {
+          fname: document.getElementById("fname").value,
+          lname: document.getElementById("lname").value,
+          email: document.getElementById("email").value,
+        };
+
+        allUsers[i] = updatedUser;
+
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+
+        displayUsers();
+        clearForm();
+
+        document.getElementById("addUserBtn").style.display = "block";
+        document.getElementById("updateUserBtn").style.display = "none";
+        document.getElementById("addUserBtn").disabled = true;
+      }
+
+      function validateForm() {
+        const fname = document.getElementById("fname");
+        const lname = document.getElementById("lname");
+        const email = document.getElementById("email");
+
+        // reset
+        fname.classList.remove("on_success");
+        lname.classList.remove("on_success");
+        email.classList.remove("on_success");
+
+        fname.classList.add("on_error");
+        lname.classList.add("on_error");
+        email.classList.add("on_error");
+
+        if (fname.value.length >= 6) {
+          fname.classList.remove("on_error");
+          fname.classList.add("on_success");
+        }
+
+        if (lname.value.length >= 6) {
+          lname.classList.remove("on_error");
+          lname.classList.add("on_success");
+        }
+
+        if (email.value.length >= 6) {
+          email.classList.remove("on_error");
+          email.classList.add("on_success");
+        }
+
+        if (
+          fname.value.length >= 6 &&
+          lname.value.length >= 6 &&
+          email.value.length >= 6
+        ) {
+          document.getElementById("addUserBtn").disabled = false;
+        } else {
+          document.getElementById("addUserBtn").disabled = true;
+        }
+      }
+    </script>
+  </body>
+</html>
