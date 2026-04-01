@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button onclick="gotoCreateUser()">create user</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        let allUsers = JSON.parse(localStorage.getItem("allUsers"));
+        console.log(allUsers);
+        function displayUsers() {
+            allUsers.forEach(function (user, index) {
+                var mytr = document.createElement("tr")
+                mytr.innerHTML=`<td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.password}</td>
+                <td><button>edit</button></td>
+                <td><button onclick="handleDelete(${index})">Delete</button></td>`;
+                document.querySelector("tbody").appendChild(mytr)
+            });
+        }
+        displayUsers();
+        function handleDelete(index)
+        {
+           window.location.href="delete.html?"+index
+        }
+        function gotoCreateUser()
+        {
+            window.location.href="bom.html"
+        } 
+    </script>
+</body>
+
+</html>
