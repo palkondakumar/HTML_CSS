@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>sample form</h2>
+    <form>
+        <label for="name">Name</label> <br>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="name">email</label> <br>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="name">password</label> <br>
+
+        <input type="text" id="password" name="password"><br><br>
+        <input type="button" value="submit" onclick="gotoUsertablepage()">
+    </form>
+
+    <script>
+        function readInputFields() {
+            var user = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+
+            };
+            // console.log(user);
+            return user
+        }
+                    let allUsers=JSON.parse(localStorage.getItem("allUsers"));
+                    if (allUsers==null)
+                    {
+                        allUsers=[];
+                    }
+        // let allUsers = [];
+        function gotoUsertablepage() {
+            const user = readInputFields()
+            allUsers.push(user);
+            localStorage.setItem("allUsers", JSON.stringify(allUsers))
+             document.location.href="Table1.html"
+        }
+
+
+    </script>
+
+</body>
+
+</html>
