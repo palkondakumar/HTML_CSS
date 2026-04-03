@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>welcome to delete page</h2>
+    <ul></ul>
+    <button onclick="deleteUser()">confirm delete</button>
+    <script>
+        
+        
+             let allUsers = JSON.parse(localStorage.getItem("allUsers"));
+
+        const url = window.location.href;
+        const index = url.substr(url.indexOf("?") + 1);
+
+        const userObj = allUsers[index];
+
+        for (let a in userObj) {
+            var myLi = document.createElement("li");
+            myLi.innerHTML = userObj[a];
+            document.querySelector("ul").append(myLi);
+        }
+      function deleteUser() {
+    var check = confirm("Do you want to delete");
+
+    if (check == true) {
+        allUsers.splice(index, 1);
+        localStorage.setItem("allUsers", JSON.stringify(allUsers));
+    }
+
+    window.location.href = "Table.html";
+}
+    </script>
+</body>
+
+</html>
